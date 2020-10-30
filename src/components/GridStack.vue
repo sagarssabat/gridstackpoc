@@ -24,7 +24,7 @@ export default {
       minRow: 10, // don't collapse when empty
       cellHeight: 70,
       disableOneColumnMode: true,
-      float: true,
+      float: false,
       acceptWidgets: function () {
         return true;
       }, // function example, else can be simple: true | false | '.someClass' value
@@ -44,10 +44,11 @@ export default {
         noResize: el.attributes["data-gs-noResize"]?.value,
         noMove: el.attributes["data-gs-noMove"]?.value,
         resizeHandles: el.attributes["data-gs-resizeHandles"]?.value,
+        height: el.attributes["data-gs-height"]?.value,
         el: el,
       }));
-      this.$emit("dropped", itemsToDispatch[0]);
       itemsToDispatch.forEach((item) => this.grid.removeWidget(item.el));
+      if (itemsToDispatch.length > 0) this.$emit("dropped", itemsToDispatch[0]);
     });
   },
 };

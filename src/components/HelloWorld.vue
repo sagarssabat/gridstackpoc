@@ -1,10 +1,15 @@
 <template>
   <div class="container">
     <div class="draggables">
-      <GridStackDragInItem data-gs-id="drag-item-1"> Hiii, Drag me </GridStackDragInItem>
-      <GridStackDragInItem data-gs-id="drag-item-2"> Hiii, Drag me </GridStackDragInItem>
-      <GridStackDragInItem data-gs-id="drag-item-3"> Hiii, Drag me </GridStackDragInItem>
+      <GridStackDragInItem data-gs-id="drag-item-1"  data-gs-height="2"> Hiii, Drag me </GridStackDragInItem>
+      <GridStackDragInItem data-gs-id="drag-item-2" data-gs-height="2"> Hiii, Drag me </GridStackDragInItem>
+      <GridStackDragInItem data-gs-id="drag-item-3" data-gs-height="2"> Hiii, Drag me </GridStackDragInItem>
     </div>
+    <GridStack class="draghere" @dropped="onDropped">
+      <GridStackItem v-for="item in items" :key="item.id" v-bind="item">
+        <p>Hiii {{ item.id }}</p>
+      </GridStackItem>
+    </GridStack>
     <GridStack class="draghere" @dropped="onDropped">
       <GridStackItem v-for="item in items" :key="item.id" v-bind="item">
         <p>Hiii {{ item.id }}</p>
