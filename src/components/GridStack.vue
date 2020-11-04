@@ -5,6 +5,11 @@
 </template>
 <script>
 export default {
+  props: {
+    items: {
+      type: Array
+    }
+  },
   data: function () {
     return {
       grid: null,
@@ -21,7 +26,7 @@ export default {
   mounted() {
     var options = {
       column: 12,
-      minRow: 10, // don't collapse when empty
+      minRow: 5, // don't collapse when empty
       cellHeight: 70,
       disableOneColumnMode: true,
       float: false,
@@ -31,8 +36,9 @@ export default {
     };
     this.grid = this.$GridStack.init(options, this.$el);
     this.grid.on("added", (e, items) => {
-      const onlyDraggedItems = items.filter((item) =>
-        item.el.classList.contains("draggable-el")
+      // debugger
+      const onlyDraggedItems = items.filter(() =>
+        true
       );
       const itemsToDispatch = onlyDraggedItems.map(({ el }) => ({
         id: el.attributes["data-gs-id"]?.value,
@@ -50,6 +56,14 @@ export default {
       itemsToDispatch.forEach((item) => this.grid.removeWidget(item.el));
       if (itemsToDispatch.length > 0) this.$emit("dropped", itemsToDispatch[0]);
     });
+    this.grid.on('removed', () =>  this.updateItems())
+    this.grid.on('change', () =>  this.updateItems())
   },
+  methods: {
+    updateItems() {
+      const newItems = this.grid.save()
+      this.$emit('update:items', newItems)
+    }
+  }
 };
 </script>
